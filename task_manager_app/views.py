@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.urls import reverse_lazy
@@ -128,3 +129,38 @@ class PositionDeleteView(LoginRequiredMixin, DeleteView):
     model = Position
     template_name = "task_manager/position_confirm_delete.html"
     success_url = reverse_lazy("position_list")
+
+
+# Employee Views
+
+
+class EmployeeListView(LoginRequiredMixin, ListView):
+    model = get_user_model()
+    template_name = "task_manager/employee_list.html"
+    context_object_name = "employees"
+
+
+class EmployeeDetailView(LoginRequiredMixin, DetailView):
+    model = get_user_model()
+    template_name = "task_manager/employee_detail.html"
+    context_object_name = "employee"
+
+
+class EmployeeCreateView(LoginRequiredMixin, CreateView):
+    model = get_user_model()
+    template_name = "task_manager/employee_form.html"
+    fields = ["username", "email", "first_name", "last_name", "position", "password"]
+    success_url = reverse_lazy("employee_list")
+
+
+class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    template_name = "task_manager/employee_form.html"
+    fields = ["username", "email", "first_name", "last_name", "position"]
+    success_url = reverse_lazy("employee_list")
+
+
+class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
+    model = get_user_model()
+    template_name = "task_manager/employee_confirm_delete.html"
+    success_url = reverse_lazy("employee_list")
