@@ -8,11 +8,16 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     DeleteView,
+    TemplateView,
 )
 
 from accounts.forms import RegistrationForm
 from task_manager_app.forms import TaskForm, TaskSearchForm
 from task_manager_app.models import Task, TaskType, Position
+
+
+class IndexView(LoginRequiredMixin, TemplateView):
+    template_name = 'task_manager/index.html'
 
 
 # Task Views
