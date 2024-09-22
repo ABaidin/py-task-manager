@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Confirm Delete Task Type{% endblock %}
+
+{% block content %}
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3>Confirm Task Type Deletion</h3>
+    </div>
+    <div class="card-body">
+      <p>Are you sure you want to delete the task type "{{ object.name }}"?</p>
+      <form method="post">
+        {% csrf_token %}
+        <a href="{% url 'tasks:task-type-list' %}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
