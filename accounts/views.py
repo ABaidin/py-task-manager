@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.contrib.auth import login
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from .forms import LoginForm, RegistrationForm
@@ -15,16 +15,13 @@ class CustomLoginView(LoginView):
 
     def form_valid(self, form):
         remember_me = form.cleaned_data.get("remember_me")
-        if remember_me:
-            self.request.session.set_expiry(settings.SESSION_COOKIE_AGE)
-        else:
+        if not remember_me:
             self.request.session.set_expiry(0)
 
-        login(self.request, form.get_user())
-        return redirect(self.get_success_url())
+        return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("tasks:task-list")
+        return reverse_lazy("login")
 
 
 class CustomRegisterView(CreateView):
@@ -37,4 +34,8 @@ class CustomRegisterView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse("tasks:task-list")
+        return reverse_lazy("tasks:task-list")
+
+
+class CustomLogoutView(LogoutView):
+    next_page = reverse_lazy('login')
