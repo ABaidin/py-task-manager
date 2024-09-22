@@ -1,8 +1,6 @@
-from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -21,7 +19,7 @@ class CustomLoginView(LoginView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("login")
+        return reverse_lazy("tasks:index")
 
 
 class CustomRegisterView(CreateView):
@@ -38,4 +36,4 @@ class CustomRegisterView(CreateView):
 
 
 class CustomLogoutView(LogoutView):
-    next_page = reverse_lazy('login')
+    next_page = reverse_lazy("accounts:login")
