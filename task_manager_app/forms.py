@@ -7,7 +7,7 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = [
             "name", "description", "deadline",
-            "priority", "task_type", "assigned_to",
+            "priority", "task_type", "assigned_to", "is_completed"
         ]
         widgets = {
             "assigned_to": forms.CheckboxSelectMultiple()
