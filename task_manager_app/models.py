@@ -10,7 +10,12 @@ class Position(models.Model):
 
 
 class Employee(AbstractUser):
-    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    position = models.ForeignKey(
+        Position,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return f"{self.position} {self.first_name} {self.last_name}"
