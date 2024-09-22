@@ -6,12 +6,15 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = [
-            "name", "description", "deadline",
-            "priority", "task_type", "assigned_to", "is_completed"
+            "name",
+            "description",
+            "deadline",
+            "priority",
+            "task_type",
+            "assigned_to",
+            "is_completed",
         ]
-        widgets = {
-            "assigned_to": forms.CheckboxSelectMultiple()
-        }
+        widgets = {"assigned_to": forms.CheckboxSelectMultiple()}
 
 
 class TaskSearchForm(forms.Form):
@@ -20,11 +23,8 @@ class TaskSearchForm(forms.Form):
         required=False,
         label="",
         widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": "Search by name..."
-            }
-        )
+            attrs={"class": "form-control", "placeholder": "Search by name..."}
+        ),
     )
 
     task_type = forms.ModelChoiceField(
@@ -32,11 +32,9 @@ class TaskSearchForm(forms.Form):
         required=False,
         label="",
         widget=forms.Select(attrs={"class": "form-select"}),
-        empty_label="-- Filter by Task Type --"
+        empty_label="-- Filter by Task Type --",
     )
 
     show_my_tasks = forms.BooleanField(
-        required=False,
-        label="Show only my tasks",
-        widget=forms.CheckboxInput()
+        required=False, label="Show only my tasks", widget=forms.CheckboxInput()
     )

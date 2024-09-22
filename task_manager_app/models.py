@@ -11,10 +11,7 @@ class Position(models.Model):
 
 class Employee(AbstractUser):
     position = models.ForeignKey(
-        Position,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
+        Position, on_delete=models.SET_NULL, null=True, blank=True
     )
 
     def __str__(self):
@@ -30,16 +27,18 @@ class TaskType(models.Model):
 
 class Task(models.Model):
     class Priority(models.TextChoices):
-        URGENT = 'Urgent', 'Urgent'
-        HIGH = 'High', 'High'
-        MEDIUM = 'Medium', 'Medium'
-        LOW = 'Low', 'Low'
+        URGENT = "Urgent", "Urgent"
+        HIGH = "High", "High"
+        MEDIUM = "Medium", "Medium"
+        LOW = "Low", "Low"
 
     name = models.CharField(max_length=255)
     description = models.TextField()
     deadline = models.DateTimeField()
     is_completed = models.BooleanField(default=False)
-    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, related_name="tasks")
+    task_type = models.ForeignKey(
+        TaskType, on_delete=models.CASCADE, related_name="tasks"
+    )
     assigned_to = models.ManyToManyField(Employee, related_name="tasks")
     priority = models.CharField(
         max_length=10,
