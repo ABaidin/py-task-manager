@@ -10,6 +10,7 @@ from django.views.generic import (
     DeleteView,
 )
 
+from accounts.forms import RegistrationForm
 from task_manager_app.forms import TaskForm, TaskSearchForm
 from task_manager_app.models import Task, TaskType, Position
 
@@ -149,7 +150,7 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
 class EmployeeCreateView(LoginRequiredMixin, CreateView):
     model = get_user_model()
     template_name = "task_manager/employee_form.html"
-    fields = ["username", "email", "first_name", "last_name", "position", "password"]
+    form_class = RegistrationForm
     success_url = reverse_lazy("employee_list")
 
 
