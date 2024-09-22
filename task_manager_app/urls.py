@@ -18,13 +18,15 @@ from .views import (
     EmployeeDetailView,
     EmployeeUpdateView,
     EmployeeDeleteView,
+    IndexView,
 )
 
 app_name = "task_manager"
 
 urlpatterns = [
+    path("", IndexView.as_view(), name="index"),
     # Task URLs
-    path("", TaskListView.as_view(), name="task_list"),
+    path("task/list/", TaskListView.as_view(), name="task_list"),
     path("task/create/", TaskCreateView.as_view(), name="task_create"),
     path("task/update/<int:pk>/", TaskUpdateView.as_view(), name="task_update"),
     path("task/detail/<int:pk>/", TaskDetailView.as_view(), name="task_detail"),
