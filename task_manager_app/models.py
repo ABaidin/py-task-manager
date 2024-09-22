@@ -41,3 +41,6 @@ class Task(models.Model):
         choices=Priority.choices,
         default=Priority.MEDIUM,
     )
+
+    def __str__(self):
+        return self.name
