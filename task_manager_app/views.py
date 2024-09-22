@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from task_manager_app.forms import TaskForm
+from task_manager_app.forms import TaskForm, TaskSearchForm
 from task_manager_app.models import Task
 
 
@@ -12,16 +12,31 @@ class TaskListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        show_my_tasks = self.request.GET.get("show_my_tasks")
+        queryset = Task.objects.all()
+        form = TaskSearchForm(self.request.GET or None)
 
-        if show_my_tasks:
-            return Task.objects.filter(assigned_to=self.request.user)
-        else:
-            return Task.objects.all()
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            task_type = form.cleaned_data.get("task_type")
+            show_my_tasks = form.cleaned_data.get("show_my_tasks")
+
+            if name:
+                queryset = queryset.filter(name__icontains=name)
+
+            if task_type:
+                queryset = queryset.filter(task_type=task_type)
+
+            if show_my_tasks:
+                queryset = queryset.filter(assigned_to=self.request.user)
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["show_my_tasks"] = self.request.GET.get("show_my_tasks")
+
+        form = TaskSearchForm(self.request.GET or None)
+        context['form'] = form
+
         return context
 
 
