@@ -1,12 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 
 from task_manager_app.forms import TaskForm, TaskSearchForm
-from task_manager_app.models import Task
+from task_manager_app.models import Task, TaskType
 
-
+ # Task Views
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = "task_manager/task_list.html"
@@ -65,3 +71,30 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     template_name = "task_manager/task_confirm_delete.html"
     success_url = reverse_lazy("task_list")
+
+
+ # Task Type Views
+class TaskTypeListView(LoginRequiredMixin, ListView):
+    model = TaskType
+    template_name = "task_manager/task_type_list.html"
+    context_object_name = "task_types"
+
+
+class TaskTypeCreateView(LoginRequiredMixin, CreateView):
+    model = TaskType
+    template_name = "task_manager/task_type_form.html"
+    fields = ["name"]
+    success_url = reverse_lazy("tasktype_list")
+
+
+class TaskTypeUpdateView(LoginRequiredMixin, UpdateView):
+    model = TaskType
+    template_name = "task_manager/task_type_form.html"
+    fields = ["name"]
+    success_url = reverse_lazy("tasktype_list")
+
+
+class TaskTypeDeleteView(LoginRequiredMixin, DeleteView):
+    model = TaskType
+    template_name = "task_manager/task_type_confirm_delete.html"
+    success_url = reverse_lazy("tasktype_list")
