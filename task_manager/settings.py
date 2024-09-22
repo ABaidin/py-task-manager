@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     #custom apps
     "task_manager_app",
+    "accounts",
 ]
 
 MIDDLEWARE = [
