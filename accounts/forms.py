@@ -8,8 +8,11 @@ class RegistrationForm(UserCreationForm):
         model = get_user_model()
         fields = [
             "username", "password1", "password2",
-            "email", "first_name", "last_name"
+            "email", "first_name", "last_name", "position"
         ]
+        widgets = {
+            "position": forms.Select(attrs={"class": "form-control"}),
+        }
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -19,4 +22,6 @@ class RegistrationForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
     remember_me = forms.BooleanField(required=False, initial=True)
