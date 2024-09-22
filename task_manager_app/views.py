@@ -1,6 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from task_manager_app.forms import TaskForm
 from task_manager_app.models import Task
 
 
@@ -21,3 +23,29 @@ class TaskListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["show_my_tasks"] = self.request.GET.get("show_my_tasks")
         return context
+
+
+class TaskDetailView(LoginRequiredMixin, DetailView):
+    model = Task
+    template_name = "task_detail.html"
+    context_object_name = "task"
+
+
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "task_form.html"
+    success_url = reverse_lazy("task_list")
+
+
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "task_form.html"
+    success_url = reverse_lazy("task_list")
+
+
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    model = Task
+    template_name = "task_confirm_delete.html"
+    success_url = reverse_lazy("task_list")
