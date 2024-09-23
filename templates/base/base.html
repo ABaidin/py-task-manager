@@ -13,7 +13,14 @@
   <a class="navbar-brand" href="{% url 'tasks:index' %}">Task Manager</a>
   <ul class="navbar-nav ml-auto">
     {% if user.is_authenticated %}
-      <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
+      <li class="nav-item">
+        <form method="post" action="{% url 'accounts:logout' %}" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-link nav-link" style="border: none; background: none; padding: 0;">
+            Logout
+          </button>
+        </form>
+      </li>
     {% else %}
       <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
       <li class="nav-item"><a class="nav-link" href="{% url 'accounts:register' %}">Register</a></li>
