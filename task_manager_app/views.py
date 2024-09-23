@@ -27,6 +27,7 @@ class TaskListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self) -> QuerySet:
+        sort_param = self.request.GET.get("sort", "deadline")
         queryset = Task.objects.all()
         form = TaskSearchForm(self.request.GET or None)
 
@@ -44,7 +45,7 @@ class TaskListView(LoginRequiredMixin, ListView):
             if show_my_tasks:
                 queryset = queryset.filter(assigned_to=self.request.user)
 
-        return queryset
+        return queryset.order_by(sort_param)
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
