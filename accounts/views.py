@@ -33,7 +33,3 @@ class CustomRegisterView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy("tasks:task-list")
-
-
-class CustomLogoutView(LogoutView):
-    next_page = reverse_lazy("accounts:login")
