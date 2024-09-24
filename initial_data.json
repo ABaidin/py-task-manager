@@ -1,0 +1,113 @@
+[
+  {
+    "model": "task_manager_app.position",
+    "pk": 1,
+    "fields": {
+      "name": "Manager"
+    }
+  },
+  {
+    "model": "task_manager_app.position",
+    "pk": 2,
+    "fields": {
+      "name": "Developer"
+    }
+  },
+  {
+    "model": "task_manager_app.position",
+    "pk": 3,
+    "fields": {
+      "name": "Tester"
+    }
+  },
+  {
+    "model": "task_manager_app.employee",
+    "pk": 1,
+    "fields": {
+      "username": "john_doe",
+      "password": "pbkdf2_sha256$320000$abc123hashed$examplehashedpassword",
+      "email": "john.doe@example.com",
+      "first_name": "John",
+      "last_name": "Doe",
+      "position": 2,
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "task_manager_app.employee",
+    "pk": 2,
+    "fields": {
+      "username": "jane_smith",
+      "password": "pbkdf2_sha256$320000$abc123hashed$examplehashedpassword",
+      "email": "jane.smith@example.com",
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "position": 1,
+      "is_superuser": true,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "task_manager_app.tasktype",
+    "pk": 1,
+    "fields": {
+      "name": "Bug Fix"
+    }
+  },
+  {
+    "model": "task_manager_app.tasktype",
+    "pk": 2,
+    "fields": {
+      "name": "Feature Development"
+    }
+  },
+  {
+    "model": "task_manager_app.tasktype",
+    "pk": 3,
+    "fields": {
+      "name": "Code Review"
+    }
+  },
+  {
+    "model": "task_manager_app.task",
+    "pk": 1,
+    "fields": {
+      "name": "Fix login bug",
+      "description": "Resolve issue where users can't log in using their email address.",
+      "deadline": "2024-09-30T12:00:00Z",
+      "is_completed": false,
+      "task_type": 1,
+      "priority": "Urgent",
+      "assigned_to": [1, 2]
+    }
+  },
+  {
+    "model": "task_manager_app.task",
+    "pk": 2,
+    "fields": {
+      "name": "Implement payment gateway",
+      "description": "Integrate payment gateway for subscription model.",
+      "deadline": "2024-10-05T15:00:00Z",
+      "is_completed": false,
+      "task_type": 2,
+      "priority": "High",
+      "assigned_to": [2]
+    }
+  },
+  {
+    "model": "task_manager_app.task",
+    "pk": 3,
+    "fields": {
+      "name": "Review pull requests",
+      "description": "Go through all pending PRs and provide feedback.",
+      "deadline": "2024-09-28T18:00:00Z",
+      "is_completed": true,
+      "task_type": 3,
+      "priority": "Medium",
+      "assigned_to": [1]
+    }
+  }
+]
