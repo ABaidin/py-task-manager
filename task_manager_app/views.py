@@ -20,39 +20,43 @@ class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "task_manager/index.html"
 
 
-# Task Views
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = "task_manager/task_list.html"
+    context_object_name = "tasks"
     paginate_by = 10
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        name = self.request.GET.get("name", "")
+        task_type = self.request.GET.get("task_type")
+        show_my_tasks = self.request.GET.get("show_my_tasks")
+        is_completed = self.request.GET.get("is_completed")
+
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+
+        if task_type:
+            queryset = queryset.filter(task_type_id=task_type)
+
+        if show_my_tasks:
+            queryset = queryset.filter(assigned_to=self.request.user)
+
+        if is_completed == "1":
+            queryset = queryset.filter(is_completed=True)
+        elif is_completed == "0":
+            queryset = queryset.filter(is_completed=False)
+
         sort_param = self.request.GET.get("sort", "deadline")
-        queryset = Task.objects.all()
-        form = TaskSearchForm(self.request.GET or None)
+        if sort_param:
+            queryset = queryset.order_by(sort_param)
 
-        if form.is_valid():
-            name = form.cleaned_data.get("name")
-            task_type = form.cleaned_data.get("task_type")
-            show_my_tasks = form.cleaned_data.get("show_my_tasks")
+        return queryset
 
-            if name:
-                queryset = queryset.filter(name__icontains=name)
-
-            if task_type:
-                queryset = queryset.filter(task_type=task_type)
-
-            if show_my_tasks:
-                queryset = queryset.filter(assigned_to=self.request.user)
-
-        return queryset.order_by(sort_param)
-
-    def get_context_data(self, **kwargs) -> dict:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        form = TaskSearchForm(self.request.GET or None)
-        context["form"] = form
-
+        context["form"] = TaskSearchForm(self.request.GET)
         return context
 
 
@@ -109,9 +113,6 @@ class TaskTypeDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("tasks:task-type-list")
 
 
-# Position Views
-
-
 class PositionListView(LoginRequiredMixin, ListView):
     model = Position
     template_name = "task_manager/position_list.html"
@@ -136,9 +137,6 @@ class PositionDeleteView(LoginRequiredMixin, DeleteView):
     model = Position
     template_name = "task_manager/position_confirm_delete.html"
     success_url = reverse_lazy("tasks:position-list")
-
-
-# Employee Views
 
 
 class EmployeeListView(LoginRequiredMixin, ListView):
