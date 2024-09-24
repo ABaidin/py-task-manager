@@ -25,7 +25,6 @@
         {% endif %}
       </p>
 
-      <!-- Edit and Delete Buttons -->
       <a href="{% url 'tasks:task-update' task.pk %}" class="btn btn-primary mt-2">Edit Task</a>
       <a href="{% url 'tasks:task-delete' task.pk %}" class="btn btn-danger mt-2">Delete Task</a>
     </div>
