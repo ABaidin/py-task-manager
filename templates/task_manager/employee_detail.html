@@ -2,6 +2,8 @@
 {% block content %}
   <h2>{{ employee.first_name }} {{ employee.last_name }}</h2>
   <p>Username: {{ employee.username }}</p>
+  <p>First name: {{ employee.first_name }}</p>
+  <p>Last name: {{ employee.last_name }}</p>
   <p>Email: {{ employee.email }}</p>
   <p>Position: {{ employee.position.name }}</p>
   <a href="{% url 'tasks:employee-update' employee.id %}" class="btn btn-primary">Edit</a>
