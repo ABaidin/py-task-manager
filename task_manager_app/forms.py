@@ -1,4 +1,5 @@
 from django import forms
+
 from task_manager_app.models import Task, TaskType
 
 

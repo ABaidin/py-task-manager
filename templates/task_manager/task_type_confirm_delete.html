@@ -11,7 +11,7 @@
       <p>Are you sure you want to delete the task type "{{ object.name }}"?</p>
       <form method="post">
         {% csrf_token %}
-        <a href="{% url 'tasks:task-type-list' %}" class="btn btn-secondary">Cancel</a>
+        <a href="{% url 'tasks:task-types' %}" class="btn btn-secondary">Cancel</a>
         <button type="submit" class="btn btn-danger">Confirm Delete</button>
       </form>
     </div>

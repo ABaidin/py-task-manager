@@ -8,9 +8,9 @@
     <p class="lead">Manage your tasks, and employees efficiently with our task management system.</p>
     <hr class="my-4">
     <p>Get started by managing your tasks, and employees:</p>
-    <a class="btn btn-primary btn-lg" href="{% url 'tasks:task-list' %}" role="button">View Tasks</a>
-    <a class="btn btn-info btn-lg" href="{% url 'tasks:task-type-list' %}" role="button">Manage Task Types</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'tasks:tasks' %}" role="button">View Tasks</a>
+    <a class="btn btn-info btn-lg" href="{% url 'tasks:task-types' %}" role="button">Manage Task Types</a>
     <a class="btn btn-success btn-lg" href="{% url 'tasks:position-list' %}" role="button">Manage Positions</a>
-    <a class="btn btn-warning btn-lg" href="{% url 'tasks:employee-list' %}" role="button">Manage Employees</a>
+    <a class="btn btn-warning btn-lg" href="{% url 'tasks:employees' %}" role="button">Manage Employees</a>
   </div>
 {% endblock %}

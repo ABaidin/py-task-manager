@@ -26,7 +26,7 @@ class TaskManagerViewsTest(TestCase):
         self.client.force_login(self.employee)
 
     def test_task_list_view_uses_correct_template(self):
-        response = self.client.get(reverse('tasks:task-list'))
+        response = self.client.get(reverse('tasks:tasks'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'task_manager/task_list.html')
 

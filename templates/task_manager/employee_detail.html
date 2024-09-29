@@ -7,4 +7,5 @@
   <p>Email: {{ employee.email }}</p>
   <p>Position: {{ employee.position.name }}</p>
   <a href="{% url 'tasks:employee-update' employee.id %}" class="btn btn-primary">Edit</a>
+  <a href="{% url 'tasks:employee-delete' employee.id %}" class="btn btn-danger">Delete</a>
 {% endblock %}

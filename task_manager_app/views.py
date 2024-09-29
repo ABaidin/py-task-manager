@@ -70,20 +70,20 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = "task_manager/task_form.html"
-    success_url = reverse_lazy("tasks:task-list")
+    success_url = reverse_lazy("tasks:tasks")
 
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "task_manager/task_form.html"
-    success_url = reverse_lazy("tasks:task-list")
+    success_url = reverse_lazy("tasks:tasks")
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     template_name = "task_manager/task_confirm_delete.html"
-    success_url = reverse_lazy("tasks:task-list")
+    success_url = reverse_lazy("tasks:tasks")
 
 
 # Task Type Views
@@ -97,20 +97,20 @@ class TaskTypeCreateView(LoginRequiredMixin, CreateView):
     model = TaskType
     template_name = "task_manager/task_type_form.html"
     fields = ["name"]
-    success_url = reverse_lazy("tasks:task-type-list")
+    success_url = reverse_lazy("tasks:task-types")
 
 
 class TaskTypeUpdateView(LoginRequiredMixin, UpdateView):
     model = TaskType
     template_name = "task_manager/task_type_form.html"
     fields = ["name"]
-    success_url = reverse_lazy("tasks:task-type-list")
+    success_url = reverse_lazy("tasks:task-types")
 
 
 class TaskTypeDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskType
     template_name = "task_manager/task_type_confirm_delete.html"
-    success_url = reverse_lazy("tasks:task-type-list")
+    success_url = reverse_lazy("tasks:task-types")
 
 
 class PositionListView(LoginRequiredMixin, ListView):
@@ -155,17 +155,17 @@ class EmployeeCreateView(LoginRequiredMixin, CreateView):
     model = get_user_model()
     template_name = "task_manager/employee_form.html"
     form_class = RegistrationForm
-    success_url = reverse_lazy("tasks:employee-list")
+    success_url = reverse_lazy("tasks:employees")
 
 
 class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     template_name = "task_manager/employee_form.html"
     fields = ["username", "email", "first_name", "last_name", "position"]
-    success_url = reverse_lazy("tasks:employee-list")
+    success_url = reverse_lazy("tasks:employees")
 
 
 class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
     model = get_user_model()
     template_name = "task_manager/employee_confirm_delete.html"
-    success_url = reverse_lazy("tasks:employee-list")
+    success_url = reverse_lazy("tasks:employees")
