@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Employees</h2>
+  <a href="{% url 'tasks:employee-create' %}" class="btn btn-primary">Create Employee</a>
+  <ul>
+    {% for employee in employees %}
+      <li>{{ employee.first_name }} {{ employee.last_name }} ({{ employee.position.name }}) -
+        <a href="{% url 'tasks:employee-detail' employee.id %}">View</a> |
+        <a href="{% url 'tasks:employee-update' employee.id %}">Edit</a> |
+        <a href="{% url 'tasks:employee-delete' employee.id %}">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Task Manager{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'css/soft-ui-dashboard.css' %}">
+  {% load crispy_forms_tags %}
+</head>
+<body class="g-sidenav-show bg-gray-100">
+
+{% include 'includes/sidebar.html' %}
+
+<main class="main-content">
+  {% include 'includes/navigation.html' %}
+
+  <div class="container-fluid py-4">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  {% include 'includes/footer.html' %}
+</main>
+
+<script src="{% static 'js/soft-ui-dashboard.js' %}"></script>
+<script src="{% static 'js/core/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

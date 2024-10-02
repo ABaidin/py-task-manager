@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">Tasks</h5>
+      <a href="{% url 'tasks:task-create' %}" class="btn btn-primary">Create Task</a>
+    </div>
+    <div class="card-body">
+      <form method="GET" class="row g-3 mb-3">
+        <div class="col-md-4">
+          {{ form.name|as_crispy_field }} 
+        </div>
+        <div class="col-md-4">
+          {{ form.task_type|as_crispy_field }}
+        </div>
+        <div class="col-md-4 d-flex align-items-center">
+          {{ form.show_my_tasks|as_crispy_field }}
+        </div>
+        <div class="col-md-4">
+          <label for="is_completed" class="form-label">Filter by Completion Status</label>
+          <select name="is_completed" id="is_completed" class="form-select">
+            <option value="">-- All Tasks --</option>
+            <option value="1" {% if request.GET.is_completed == "1" %}selected{% endif %}>Completed</option>
+            <option value="0" {% if request.GET.is_completed == "0" %}selected{% endif %}>Not Completed</option>
+          </select>
+        </div>
+        <div class="col-md-12 d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </div>
+      </form>
+
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th><a
+              href="?sort=name{% if request.GET.is_completed %}&is_completed={{ request.GET.is_completed }}{% endif %}">Name</a>
+          </th>
+          <th><a
+              href="?sort=deadline{% if request.GET.is_completed %}&is_completed={{ request.GET.is_completed }}{% endif %}">Deadline</a>
+          </th>
+          <th><a
+              href="?sort=priority{% if request.GET.is_completed %}&is_completed={{ request.GET.is_completed }}{% endif %}">Priority</a>
+          </th>
+          <th>Assigned To</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in object_list %}
+          <tr>
+            <td>{{ task.name }}</td>
+            <td>{{ task.deadline|date:"Y-m-d H:i" }}</td>
+            <td>{{ task.get_priority_display }}</td>
+            <td>
+              {% for emp in task.assigned_to.all %}
+                {{ emp.username }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </td>
+            <td>
+              {% if task.is_completed %}
+                <span class="badge bg-success">Completed</span>
+              {% else %}
+                <span class="badge bg-warning">Not Completed</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'tasks:task-detail' task.id %}" class="btn btn-info btn-sm">Details</a>
+              <a href="{% url 'tasks:task-update' task.id %}" class="btn btn-warning btn-sm">Edit</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="6" class="text-center">No tasks found</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+      {% include 'includes/pagination.html' %}
+    </div>
+  </div>
+{% endblock %}
