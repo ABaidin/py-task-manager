@@ -8,6 +8,7 @@ dj-database-url==2.2.0
 Django==5.1.1
 django-admin-soft-dashboard==1.0.12
 django-crispy-forms==2.3
+gunicorn==23.0.0
 mypy-extensions==1.0.0
 packaging==24.1
 pathspec==0.12.1
